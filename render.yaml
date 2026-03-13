@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: cinematic-engine
+    env: python
+    buildCommand: pip install -r requirements.txt && apt-get install -y ffmpeg || true
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PEXELS_API_KEY
+        sync: false  # you set this manually in Render dashboard
+    disk:
+      name: outputs
+      mountPath: /tmp/cinematic_outputs
+      sizeGB: 1
